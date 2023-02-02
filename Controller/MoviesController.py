@@ -4,9 +4,18 @@ class MoviesController():
     def __init__(self) -> None:
         pass
     
-    def getMovies(request):
+    def getGenres():
         try:
-            return MoviesService.getMovies(request)
+            return MoviesService.getGenres()
+        except AttributeError as e:
+            return jsonify({"error": str(e)}), 500
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+    
+    
+    def getMovies():
+        try:
+            return MoviesService.getMovies()
         except:
             pass
         

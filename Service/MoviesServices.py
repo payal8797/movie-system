@@ -1,16 +1,29 @@
 from Model.MoviesModel import *
+from Model.GenresModel import genres
+from Model.MoviesRatingsModel import moviesRatingsModel
+from flask import jsonify
 
 class MoviesService():
     def __init__(self) -> None:
         pass
     
-    def getMovies(self, request):
+    def getGenres(self):
         try:
-            limit = request.get("limit")
-            offset = request.get("offset")
-            return MoviesModel.getMovies(limit, offset)
-        except:
-            pass
+            genresList = genres.query.all()
+            return genresList
+        except AttributeError as e:
+            return jsonify({"error": str(e)}), 500
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
+    
+    def getMovies(self):
+        try:
+            movieList = moviesRatingsModel.query.all()
+            return movieList
+        except AttributeError as e:
+            return jsonify({"error": str(e)}), 500
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
         
     def searchMovie(self, request):
         try:

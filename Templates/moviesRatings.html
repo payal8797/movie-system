@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Movie Recommendation System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<div class="row row-cols-5 ps-4">
+    {% if moviesRatings|length > 0 %}
+        {% for row in moviesRatings %}
+            <div class="card-deck">
+                <div class="card border-dark mb-3" style="width: 35rem; height: 15rem">
+                    <div class="card-header">
+                            <b>{{ $moviesRatings->title }}</b>
+                    </div>
+                    <div class="card-body text-dark overflow-auto">
+                        <p class="card-text">Genre: <i>{{ $moviesRatings->avg_rating }}</i></p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+	@else
+	<p class="card-text justify-content-center">Sorry, no movie(s) found with given name!!!</p>
+	@endif
+</div>
+
+</html>
+
