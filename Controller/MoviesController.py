@@ -16,15 +16,18 @@ class MoviesController():
     def getMovies():
         try:
             return MoviesService.getMovies()
-        except:
-            pass
+        except AttributeError as e:
+            return jsonify({"error": str(e)}), 500
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
         
     def searchMovie(request):
         try:
-            # return request
             return MoviesService.searchMovie(request)
-        except:
-            pass
+        except AttributeError as e:
+            return jsonify({"error": str(e)}), 500
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
     
     def top10Movies(request):
         try:

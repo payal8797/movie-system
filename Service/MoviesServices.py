@@ -1,7 +1,7 @@
-from Model.MoviesModel import *
+from Model.MoviesGenresModel import moviesGenres
 from Model.GenresModel import genres
 from Model.MoviesRatingsModel import moviesRatingsModel
-from flask import jsonify
+from flask import jsonify, request
 
 class MoviesService():
     def __init__(self) -> None:
@@ -18,7 +18,12 @@ class MoviesService():
     
     def getMovies(self):
         try:
-            movieList = moviesRatingsModel.query.all()
+            page = request.args.get('page', 1, type=int)
+            per_page = 25
+            # print("huh")
+            movieList  = moviesRatingsModel.query.all()
+            # print("de",movieList)
+            # exit()
             return movieList
         except AttributeError as e:
             return jsonify({"error": str(e)}), 500
@@ -27,9 +32,13 @@ class MoviesService():
         
     def searchMovie(self, request):
         try:
+            page = request.get('page', 1, type=int)
+            per_page = 25
             title = request.get("title")
-            if (len(title)>0):
-                return MoviesModel.searchMovie(title)
+            # print("title", title)
+            # exit()
+            if (title):
+                return moviesRatingsModel.query.filter(moviesRatingsModel.title.ilike('%{}%'.format(title))).paginate(page = page, per_page = per_page)
             else:
                 return MoviesModel.searchMovie('')
         except:
