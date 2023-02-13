@@ -18,7 +18,7 @@
               <a class="nav-link active" aria-current="page" href="/movies"><h4>All Movies</h4></a>
             </li>
             <li class="nav-item ps-5">
-              <a class="nav-link active" aria-current="page" href="/topRatedMovies"><h4>Top movies by Genre</h4></a>
+              <a class="nav-link active" aria-current="page" href="/genres"><h4>Top movies by Genre</h4></a>
             </li>
             <li class="nav-item ps-5">
               <a class="nav-link active" aria-current="page" href="/similarUsers"><h4>Similar Taste Users</h4></a>
@@ -27,14 +27,13 @@
             <form method="GET" action="/searchMovie" class="me-4">
               <input class="form-control" type="search" placeholder="Search by title" aria-label="Search" name="title">
             </form>
-            <!-- <form method="GET" action="/topRatedMovies" class="me-2">
-              <input class="form-control" type="search" placeholder="Top 10 by genre" aria-label="Search" name="genre">
-            </form> -->
         </nav>
     </div>
 </body>
 
 {% block moviesRatings %}
+{% endblock %}
+{% block topRatedMovies %}
 {% endblock %}
 
 </html>

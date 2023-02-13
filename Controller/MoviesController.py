@@ -1,9 +1,7 @@
 from Service.MoviesServices import *
 
-class MoviesController():
-    def __init__(self) -> None:
-        pass
-    
+class MoviesController:
+    @staticmethod
     def getGenres():
         try:
             return MoviesService.getGenres()
@@ -12,15 +10,16 @@ class MoviesController():
         except Exception as e:
             return jsonify({"error": str(e)}), 500
     
-    
-    def getMovies():
+    @staticmethod
+    def getMovies(request):
         try:
-            return MoviesService.getMovies()
+            return MoviesService.getMovies(request)
         except AttributeError as e:
             return jsonify({"error": str(e)}), 500
         except Exception as e:
             return jsonify({"error": str(e)}), 500
-        
+     
+    @staticmethod   
     def searchMovie(request):
         try:
             return MoviesService.searchMovie(request)
@@ -28,13 +27,15 @@ class MoviesController():
             return jsonify({"error": str(e)}), 500
         except Exception as e:
             return jsonify({"error": str(e)}), 500
-    
-    def top10Movies(request):
+        
+    @staticmethod
+    def top10MoviesByGenre(request):
         try:
-            # return request
-            return MoviesService.top10Movies(request)
-        except:
-            pass
+            return MoviesService.top10MoviesByGenre(request)
+        except AttributeError as e:
+            return jsonify({"error": str(e)}), 500
+        except Exception as e:
+            return jsonify({"error": str(e)}), 500
     
     def similarUsers(request):
         try:

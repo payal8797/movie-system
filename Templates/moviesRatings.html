@@ -7,8 +7,8 @@
 </div>
 <br>
 <div class="row row-cols-5 ps-4">
-    {% if moviesRatings and moviesRatings.total > 0 %}
-        {% for row in moviesRatings %}
+    {% if moviesRatings %}
+        {% for row in moviesRatings.movieData %}
             <div class="card-deck">
                 <div class="card border-dark mb-3" style="width: 35rem; height: 14rem">
                     <div class="card-header">
@@ -18,10 +18,11 @@
                       <p class="card-text">
                         Genre: 
                           {% for genreName in row.movies_genres_mapping_2 %}
-                            {{genreName.genres}}
+                            {{genreName.genre_name}}
+                              {% if not loop.last %} |{% endif %}
                           {% endfor %}
                       </p>
-                      <p class="card-text">Ratings: <i>{{ row.avg_rating|round(2) if row.avg_rating is not none else '0' }}</i></p>
+                      <p class="card-text">Average rating: <i>{{ row.avg_rating|round(2) if row.avg_rating is not none else '0' }}</i></p>
                     </div>
                 </div>  
             </div>
@@ -35,7 +36,7 @@
     <ul class="pagination">
       {% if moviesRatings.has_prev %}
         <li class="page-item">
-          <a class="page-link" href="{{ url_for('main', page=moviesRatings.prev_num) }}">Previous</a>
+          <a class="page-link" href="{{ url_for(moviesPaginationValue, page=moviesRatings.prev_num) + searchPath }}">Previous</a>
         </li>
       {% else %}
         <li class="page-item disabled">
@@ -43,7 +44,7 @@
         </li>
       {% endif %}
   
-      {% for page in moviesRatings.iter_pages() %}
+      {% for page in moviesRatings.iter_pages %}
         {% if page %}
           {% if page == moviesRatings.page %}
             <li class="page-item active">
@@ -51,7 +52,7 @@
             </li>
           {% else %}
             <li class="page-item">
-              <a class="page-link" href="{{ url_for('main', page=page) }}">{{ page }}</a>
+              <a class="page-link" href="{{ url_for(moviesPaginationValue, page=page) + searchPath }}">{{ page }}</a>
             </li>
           {% endif %}
         {% else %}
@@ -63,7 +64,7 @@
   
       {% if moviesRatings.has_next %}
         <li class="page-item">
-          <a class="page-link" href="{{ url_for('main', page=moviesRatings.next_num) }}">Next</a>
+          <a class="page-link" href="{{ url_for(moviesPaginationValue, page=moviesRatings.next_num) + searchPath }}">Next</a>
         </li>
       {% else %}
         <li class="page-item disabled">
