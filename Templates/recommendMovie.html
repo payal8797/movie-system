@@ -1,0 +1,43 @@
+{% extends "master.html" %}
+
+{% block recommendMovie %}
+
+<div>
+	<h2 class="mb-0 d-flex justify-content-center" ><b>{{header}}</b></h2>
+</div>
+<br>
+
+<form method="GET" action="/recommendMovie" class="me-4">
+  Movie recommendation for user: <input class="form-control" type="search" placeholder="Search by userid" aria-label="Search" name="userid">
+</form>
+<br>
+
+<br>
+<div class="row row-cols-5 ps-4">
+    {% if moviesRatings %}
+        {% for row in moviesRatings.movieData %}
+            <div class="card-deck">
+                <div class="card border-dark mb-3" style="width: 35rem; height: 14rem">
+                    <div class="card-header">
+                            <b>{{ row.title }}</b>
+                    </div>
+                    <div class="card-body text-dark overflow-auto">
+                      <p class="card-text">
+                        Genre: 
+                          {% for genreName in row.movies_genres_mapping_2 %}
+                            {{genreName.genre_name}}
+                              {% if not loop.last %} |{% endif %}
+                          {% endfor %}
+                      </p>
+                      <p class="card-text">Average rating: <i>{{ row.avg_rating|round(2) if row.avg_rating is not none else '0' }}</i></p>
+                    </div>
+                </div>  
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+{% endblock %}
+  
+
+

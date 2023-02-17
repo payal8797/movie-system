@@ -23,6 +23,9 @@
             <li class="nav-item ps-5">
               <a class="nav-link active" aria-current="page" href="/similarUsers"><h4>Similar Taste Users</h4></a>
             </li>
+            <li class="nav-item ps-5">
+              <a class="nav-link active" aria-current="page" href="/recommendation"><h4>Recommend Movie</h4></a>
+            </li>
           </ul>
             <form method="GET" action="/searchMovie" class="me-4">
               <input class="form-control" type="search" placeholder="Search by title" aria-label="Search" name="title">
@@ -34,6 +37,10 @@
 {% block moviesRatings %}
 {% endblock %}
 {% block topRatedMovies %}
+{% endblock %}
+{% block similarUsers %}
+{% endblock %}
+{% block recommendMovie %}
 {% endblock %}
 
 </html>

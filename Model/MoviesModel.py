@@ -7,6 +7,13 @@ movies_genres = Table('movies_genres', db.metadata,
     Column('genre_id', Integer, db.ForeignKey('genres.id'))
 )
 
+movies_cluster_kmeans = Table('movies_cluster_kmeans', db.metadata, autoload=True, autoload_with=engine)
+class movies_cluster_kmeans_view(db.Model):
+    __table__ = movies_cluster_kmeans  
+    __mapper_args__ =   {
+                        'primary_key' :[movies_cluster_kmeans.columns.id], 
+                        }
+    
 class genres(db.Model):
     __tablename__ = "genres"
     id = Column(Integer, primary_key=True)
@@ -23,6 +30,10 @@ class movies_ratings_view(db.Model):
     __mapper_args__ =   {
                         'primary_key' :[movies_ratings.columns.movieid], 
                         }
-    
-class top10MoviesByGenre():
-    pass
+
+movies_user_ratings = Table('movies_user_ratings', db.metadata, autoload=True, autoload_with=engine)
+class movies_user_ratings_view(db.Model):
+    __table__ = movies_user_ratings  
+    __mapper_args__ =   {
+                        'primary_key' :[movies_user_ratings.columns.movieid, movies_user_ratings.columns.userid], 
+                        }

@@ -1,0 +1,86 @@
+{% extends "master.html" %}
+
+{% block similarUsers %}
+<div>
+	<h2 class="mb-0 d-flex justify-content-center" ><b>{{header}}</b></h2>
+</div>
+<br>
+
+<form method="GET" action="/similarUsers" class="me-4">
+  Search for similar users by group no: <input class="form-control" type="number" placeholder="Search by group_no" aria-label="Search" name="group_no" max="19" >
+</form>
+<br>
+
+<table id="dataTable" class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Userid</th>
+        <th>Movieid</th>
+        <th>Rating</th>
+        <th>Title</th>
+        <th>Genres</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if similarUsers %}
+        {% for row in similarUsers.movieData %}
+        <tr>
+            <td>{{ row.userid }}</td>
+            <td>{{ row.movieid }}</td>
+            <td>{{ row.rating }}</td>
+            <td>{{ row.title }}</td>
+            <td>{{ row.genres }}</td>
+        </tr>
+        {% endfor %}
+      {% else %}
+        <p class="card-text justify-content-center">Sorry, no movie(s) found with given group_no!!!</p>
+        {% endif %}
+    </tbody>
+  </table>
+  
+  
+<nav aria-label="Page navigation example" class="d-flex justify-content-center">
+  <ul class="pagination">
+    {% if similarUsers.has_prev %}
+      <li class="page-item">
+        <a class="page-link" href="{{ url_for(moviesPaginationValue, page=similarUsers.prev_num) + searchPath }}">Previous</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <a class="page-link" href="#">Previous</a>
+      </li>
+    {% endif %}
+
+    {% for page in similarUsers.iter_pages %}
+      {% if page %}
+        {% if page == similarUsers.page %}
+          <li class="page-item active">
+            <a class="page-link" href="#">{{ page }}</a>
+          </li>
+        {% else %}
+          <li class="page-item">
+            <a class="page-link" href="{{ url_for(moviesPaginationValue, page=page) + searchPath }}">{{ page }}</a>
+          </li>
+        {% endif %}
+      {% else %}
+        <li class="page-item disabled">
+          <a class="page-link" href="#">...</a>
+        </li>
+      {% endif %}
+    {% endfor %}
+
+    {% if similarUsers.has_next %}
+      <li class="page-item">
+        <a class="page-link" href="{{ url_for(moviesPaginationValue, page=similarUsers.next_num) + searchPath }}">Next</a>
+      </li>
+    {% else %}
+      <li class="page-item disabled">
+        <a class="page-link" href="#">Next</a>
+      </li>
+    {% endif %}
+  </ul>
+</nav>
+
+  
+
+  {% endblock %}

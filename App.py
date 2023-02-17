@@ -12,7 +12,7 @@ def main():
         header = 'List of all movies!!'
         moviesRatings = MoviesController.getMovies(request)
         moviesPaginationValue= 'main'
-        searchPath=''
+        searchPath=''        
         return render_template('moviesRatings.html', moviesRatings= moviesRatings, header = header, moviesPaginationValue = moviesPaginationValue, searchPath=searchPath)
     except AttributeError as e:
         return jsonify({"error": str(e)}), 500
@@ -55,13 +55,48 @@ def topMoviesByGenre():
         return jsonify({"error": str(e)}), 500
     except Exception as e:
         return jsonify({"error": str(e)}), 500
+ 
+@app.route("/searchSimilarUsers", methods = ["GET"])
+def searchSimilarUsers():
+    try:
+        return render_template('topRated.html')        
+    except AttributeError as e:
+        return jsonify({"error": str(e)}), 500
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+       
+@app.route("/similarUsers", methods = ["GET"])
+def similarUsers():
+    try:
+        group_no = request.args.get('group_no', '')
+        header = "Search results with group_no: {}".format(group_no)
+        moviesPaginationValue = 'similarUsers'
+        searchPath = '&group_no={}'.format(group_no)
+        similarUsers  = MoviesController.similarUsers(request)
+        return render_template('similarUsers.html', similarUsers = similarUsers, header = header, moviesPaginationValue=moviesPaginationValue, searchPath = searchPath)
+    except AttributeError as e:
+        return jsonify({"error": str(e)}), 500
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+@app.route("/recommendation", methods = ["GET"])
+def recommendation():
+    try:
+        return render_template('recommendMovie.html')        
+    except AttributeError as e:
+        return jsonify({"error": str(e)}), 500
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
     
-# @app.route("/similarUsers", methods = ["GET"])
-# def similarUsers():
-#     try:
-#         response  = MoviesController.similarUsers(request.args)
-#         return response
-#     except Exception as e:
-#         return e
-
-
+@app.route("/recommendMovie", methods = ["GET"])
+def recommendMovie():
+    try:
+        userid = request.args.get('userid', '')
+        header = "Top recommended movies to userid: {}".format(userid)
+        recommendMovie  = MoviesController.recommendMovie(request)
+        # return recommendMovie
+        return render_template('recommendMovie.html', moviesRatings = {"movieData":recommendMovie}, header = header )        
+    except AttributeError as e:
+        return jsonify({"error": str(e)}), 500
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
